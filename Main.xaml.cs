@@ -68,6 +68,14 @@ namespace LB
 
         public Main()
         {
+            //var add = new MainEmpty();
+            //if (add.ShowDialog() == false) // Ожидаем результата
+            //{
+            //    Task_List.Items.Clear(); // Добавляем новую задачу в ObservableCollection
+            //    Task_List.ItemsSource = Tasks;
+            //    Category_List.ItemsSource = UniqueCategoriesList;
+            //    DataContext = this;
+            //}
             _repository = new TaskRepository();
 
             var tasks = new ObservableCollection<ClassTask>(TaskRepository.AllTasks);
@@ -79,6 +87,7 @@ namespace LB
 
             // Сохранение уникальных категорий в отдельный список
             UniqueCategoriesList = new List<string>(uniqueCategories);
+            UniqueCategoriesList.Add("Все");
 
             // Остальные настройки контекста данных
             DataContext = this;
@@ -99,7 +108,6 @@ namespace LB
             Buttone_Delete.Visibility = Visibility.Hidden;
             Buttone_Gotovo.Visibility = Visibility.Hidden;
             Taske_List.Visibility = Visibility.Hidden;
-
 
             //FilteredTasks = new ObservableCollection<ClassTask>(tasks);
             DataContext = this;
@@ -133,7 +141,6 @@ namespace LB
             TaskDescriotion.Text = "";
             TaskDate.Text = "";
             TaskDateTime.Text = "";
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -157,59 +164,30 @@ namespace LB
             //}
         }
 
-
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void Task_List_SourceUpdated(object sender, DataTransferEventArgs e)
-        {
-
-        }
-
-        private void ListBoxItem_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
-
-        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void House_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Work_Selected(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             var add = new NewTask();
             if (add.ShowDialog() == true && add.NewTaskes != null) // Ожидаем результата
             {
                 Tasks.Add(add.NewTaskes); // Добавляем новую задачу в ObservableCollection
+                string category = add.NewTaskes.Category;
+
+                //// Проверяем, существует ли уже такая категория в списке
+                //if (!UniqueCategoriesList.Contains(category))
+                //{
+                //    UniqueCategoriesList.Add(category); // Добавляем категорию только если её ещё нет
+                //}    // Добавляем категорию в список уникальных категорий
+
+                // Получение уникальных категорий
+                var uniqueCategories = Tasks.Select(t => t.Category).Distinct().ToList();
+
+                // Сохранение уникальных категорий в отдельный список
+                UniqueCategoriesList = new List<string>(uniqueCategories);
                 Task_List.ItemsSource = Tasks;
-                Category_List.ItemsSource= UniqueCategoriesList;
+                DataContext=this;
+                Category_List.ItemsSource = UniqueCategoriesList;
                 DataContext = this;
             }
-        }
-
-        private void Category_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-        private void Category_List_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -249,35 +227,53 @@ namespace LB
             var filteredPeople = TaskRepository.AllTasks.Where(p => p.Category == selectedCity);
             Task_List.ItemsSource = filteredPeople.ToList();
             Taske_List.ItemsSource = filteredPeople.ToList();
-
-            //if (selectedCity == "Все")
-            //{
-            ////    // Показываем всех людей
-            ////    listBox1.ItemsSource = _people;
-            ////}
-            //else
-            //{
-
-            //}
-            //if (Category_List.SelectedItem is not null && Category_List.SelectedItem is string selectedCategory)
-            //{
-            //    // Фильтрация задач по выбранной категории
-            //    var filteredTasks = TaskRepository.AllTasks.Where(t => t.Category == selectedCategory).ToList();
-            //    FilteredTasks = new ObservableCollection<ClassTask>(filteredTasks);
-            //}
+            if (selectedCity == "Все")
+            {
+                // Показываем всех людей
+                Task_List.ItemsSource = TaskRepository.AllTasks;
+            }
         }
 
-        //public ObservableCollection<ClassTask> FilteredTasks
-        //{
-        //    get => _filteredTasks;
-        //    set
-        //    {
-        //        _filteredTasks = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-        //private ObservableCollection<ClassTask> _filteredTasks;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
 
+        }
+        private void Task_List_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
 
+        }
+
+        private void ListBoxItem_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void House_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Work_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Category_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void Category_List_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

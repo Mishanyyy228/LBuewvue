@@ -37,19 +37,6 @@ namespace LB
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ////sfTimePicker
-            //string pickedTimeString = sfTimePicker.Value.ToString();
-
-            //// Парсим строку во время
-            //TimeSpan pickedTime;
-            //if (!TimeSpan.TryParse(pickedTimeString, out pickedTime))
-            //{
-            //    MessageBox.Show("Некорректное время. Попробуйте снова.");
-            //    return;
-            //}
-
-            //// Создаём объект DateTime, объединяя текущую дату и выбранное время
-            //DateTime fullDateTime = DateTime.Now.Date.Add(pickedTime);
 
             NewTaskes = new ClassTask
             {

@@ -25,6 +25,7 @@ namespace LB
         {
             Main main = new Main();
             WindowManager.SwitchWindow(this, main);
+            
 
         }
     }

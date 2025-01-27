@@ -214,7 +214,7 @@
                         <DataTemplate>
                             <Label Content="{Binding UniqueCategoriesList}" FontSize="8" Foreground="#FF1A68E5" />
                         </DataTemplate>
-                    </ListBox.ItemTemplate>-->
+                    </ListBox.ItemTemplate>-->                
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
