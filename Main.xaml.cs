@@ -139,6 +139,8 @@ namespace LB
             TaskDescriotion.Text = "";
             TaskDate.Text = "";
             TaskDateTime.Text = "";
+            Buttone_Delete.Visibility = Visibility.Hidden;
+            Buttone_Gotovo.Visibility = Visibility.Hidden;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -156,6 +158,8 @@ namespace LB
             TaskDescriotion.Text = " ";
             TaskDate.Text = " ";
             TaskDateTime.Text = " ";
+            Buttone_Delete.Visibility = Visibility.Hidden;
+            Buttone_Gotovo.Visibility = Visibility.Hidden;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -170,6 +174,7 @@ namespace LB
                 var uniqueCategories = Tasks.Select(t => t.Category).Distinct().ToList();
                 // Сохранение уникальных категорий в отдельный список
                 UniqueCategoriesList = new List<string>(uniqueCategories);
+                UniqueCategoriesList.Add("Все");
                 Task_List.ItemsSource = Tasks;
                 DataContext = this;
                 Taske_List.ItemsSource = Tasks;
@@ -223,7 +228,7 @@ namespace LB
         {
             string selectedCity = Category_List.SelectedItem as string;
             var filteredPeople = Tasks.Where(p => p.Category == selectedCity).ToList();
-            if (filteredPeople.Count == null && selectedCity != "Все")
+            if (filteredPeople.Count <= 0 && selectedCity != "Все")
             {
                 MessageBox.Show("В данной категории нет задач.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -245,6 +250,7 @@ namespace LB
                     TaskDateTime.Text = "";
                     // Показываем всех людей
                     Task_List.ItemsSource = Tasks;
+                    Taske_List.ItemsSource = Tasks;
                 }
                 if (filteredPeople == null)
                 {
@@ -259,7 +265,6 @@ namespace LB
             }
 
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 

@@ -34,7 +34,7 @@
 
                 </Grid>
                 <Grid Grid.Row="2">
-                    <Button Content="Отмена" Margin="20,50,20,20" Click="Button_Click" ></Button>
+                    <Button Content="Отмена" Margin="20,50,20,20" Background="#FFC37979" Click="Button_Click" ></Button>
                 </Grid>
             </Grid>
             <Grid Grid.Column="0" Grid.RowSpan="2">
@@ -67,7 +67,7 @@
                     <TextBox x:Name="Description_textbox"></TextBox>
                 </Grid>
                 <Grid Grid.Row="7">
-                    <Button Content="Создать" Margin="20" Click="Button_Click_2"></Button>
+                    <Button Content="Создать" Background="#FFC37979" Margin="20" Click="Button_Click_2"></Button>
                 </Grid>
 
             </Grid>

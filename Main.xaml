@@ -220,8 +220,8 @@
                             </Grid.ColumnDefinitions>
                             <Border x:Name="checkBoxBorder" CornerRadius="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <Grid x:Name="markGrid">
-                                    <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource OptionMark.Static.Glyph}" Margin="1" Opacity="0" Stretch="None"/>
-                                    <Rectangle x:Name="indeterminateMark" Fill="{StaticResource OptionMark.Static.Glyph}" Margin="2" Opacity="0"/>
+                                    <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource OptionMark.Static.Glyph}" Margin="1" Opacity="0" Stroke="White" Stretch="None"/>
+                                    <Rectangle x:Name="indeterminateMark" Stroke="White" Fill="{StaticResource OptionMark.Static.Glyph}" Margin="2" Opacity="0"/>
                                 </Grid>
                             </Border>
                             <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -353,14 +353,14 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="5" Orientation="Horizontal" >
-                                <CheckBox Margin="5" Style="{DynamicResource CheckBoxStyle1}"  IsChecked="{Binding IsCompleted}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF1A68E5" />
+                                <CheckBox Background="#FFC37979"  Margin="5" Style="{DynamicResource CheckBoxStyle1}"  IsChecked="{Binding IsCompleted}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" OpacityMask="White" BorderBrush="White" />
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" FontSize="16" TextDecorations="Strikethrough" Foreground="Gray" Text="{Binding Name}"  />
-                                    <TextBlock Grid.Row="1" FontSize="12" TextDecorations="Strikethrough" Foreground="Gray" Text="{Binding Date}"/>
+                                    <TextBlock Grid.Row="0" FontSize="16" FontFamily="Actor" TextDecorations="Strikethrough" Foreground="Gray" Text="{Binding Name}"  />
+                                    <TextBlock Grid.Row="1" FontSize="12" FontFamily="Actor" TextDecorations="Strikethrough" Foreground="Gray" Text="{Binding Date}"/>
                                 </Grid>
                             </StackPanel>
                             <DataTemplate.Triggers>
@@ -391,6 +391,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Button Style="{DynamicResource ButtonStyle1}" Content="Готово" x:Name="Buttone_Gotovo"  Margin="30,15,30,10" Background="#FFC37979" Click="Button_Click"/>
+                        
                     </Grid>
                     <Grid Grid.Row="1">
                         <Button Style="{DynamicResource ButtonStyle2}" x:Name="Buttone_Delete"  Content="Удалить" Margin="30,15,30,10" Background="#FFC37979" Click="Button_Click_1"/>
