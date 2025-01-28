@@ -101,23 +101,14 @@ namespace LB
                         var userRepo = new UserRepository();
                         var user = userRepo.GetUser(Pochta_user11.Text, Password_user11.Text);
 
-                        //if (user != null)
-                        //{
-                        //    MessageBox.Show("С возращением, " + user.Username);
-                        //    Window w2 = new Main();
-                        //    Hide();
-                        //    w2.Show();
-
-                        //}
                         if (user != null)
                         {
                             if (user.IsNewlyRegistered) // Если пользователь зарегистрировался только что
                             {
                                 MessageBox.Show($"Добро пожаловать, {user.Username}!", "Успех", MessageBoxButton.OK);
 
-                                MainEmpty menuWindow = new MainEmpty();
-                                WindowManager.SwitchWindow(this, menuWindow);
-                                
+                                Empty menuWindow = new Empty();
+                                WindowManager.SwitchWindow(this, menuWindow);                     
                             }
                             else
                             {

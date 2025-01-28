@@ -68,16 +68,7 @@ namespace LB
 
         public Main()
         {
-            //var add = new MainEmpty();
-            //if (add.ShowDialog() == false) // Ожидаем результата
-            //{
-            //    Task_List.Items.Clear(); // Добавляем новую задачу в ObservableCollection
-            //    Task_List.ItemsSource = Tasks;
-            //    Category_List.ItemsSource = UniqueCategoriesList;
-            //    DataContext = this;
-            //}
             _repository = new TaskRepository();
-
             var tasks = new ObservableCollection<ClassTask>(TaskRepository.AllTasks);
             this.Tasks = tasks;
             DataContext = this;
@@ -87,8 +78,6 @@ namespace LB
 
             // Сохранение уникальных категорий в отдельный список
             UniqueCategoriesList = new List<string>(uniqueCategories);
-            UniqueCategoriesList.Add("Все");
-
             // Остальные настройки контекста данных
             DataContext = this;
             InitializeComponent();
@@ -96,6 +85,7 @@ namespace LB
             if (UserRepository.CurrentUser != null)
             {
                 Username = UserRepository.CurrentUser.Username;
+                UserBox.Content = Username;
             }
 
             Taske_List.ItemsSource = Tasks;
@@ -108,18 +98,26 @@ namespace LB
             Buttone_Delete.Visibility = Visibility.Hidden;
             Buttone_Gotovo.Visibility = Visibility.Hidden;
             Taske_List.Visibility = Visibility.Hidden;
-
-            //FilteredTasks = new ObservableCollection<ClassTask>(tasks);
-            DataContext = this;
         }
 
         private void  Task_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            TaskName.Content = string.Empty;
+            TaskDescriotion.Text = "";
+            TaskDate.Text = string.Empty;
+            TaskDateTime.Text = string.Empty;
             ClassTask classTask=(ClassTask)Task_List.SelectedItem;
-            TaskName.Content = classTask.Name;
-            TaskDescriotion.Text=classTask.Description;
-            TaskDate.Text= classTask.Date.ToString("HH:mm");
-            TaskDateTime.Text = classTask.DateAndTime.ToString("dd MMMMMMMMMM yyyy");
+            if (classTask == null)
+            {              
+                //MessageBox.Show("Нет активных задач");
+            }
+            if (classTask != null)
+            {
+                TaskName.Content = classTask.Name;
+                TaskDescriotion.Text = classTask.Description;
+                TaskDate.Text = classTask.Date.ToString("HH:mm");
+                TaskDateTime.Text = classTask.DateAndTime.ToString("dd MMMMMMMMMM yyyy");
+            }
             Buttone_Delete.Visibility = Visibility.Visible;
             Buttone_Gotovo.Visibility = Visibility.Visible;
         }
@@ -154,14 +152,10 @@ namespace LB
                 Task_List.Items.Refresh();
                 MessageBox.Show("Задача удалена");
             }
-            TaskName.Content = "";
-            TaskDescriotion.Text = "";
-            TaskDate.Text = "";
-            TaskDateTime.Text = "";
-            //if (classTask != null)
-            //{
-            //    Task_List.Items.Remove(classTask);
-            //}
+            TaskName.Content=" ";
+            TaskDescriotion.Text = " ";
+            TaskDate.Text = " ";
+            TaskDateTime.Text = " ";
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -169,22 +163,17 @@ namespace LB
             var add = new NewTask();
             if (add.ShowDialog() == true && add.NewTaskes != null) // Ожидаем результата
             {
+
                 Tasks.Add(add.NewTaskes); // Добавляем новую задачу в ObservableCollection
                 string category = add.NewTaskes.Category;
-
-                //// Проверяем, существует ли уже такая категория в списке
-                //if (!UniqueCategoriesList.Contains(category))
-                //{
-                //    UniqueCategoriesList.Add(category); // Добавляем категорию только если её ещё нет
-                //}    // Добавляем категорию в список уникальных категорий
-
                 // Получение уникальных категорий
                 var uniqueCategories = Tasks.Select(t => t.Category).Distinct().ToList();
-
                 // Сохранение уникальных категорий в отдельный список
                 UniqueCategoriesList = new List<string>(uniqueCategories);
                 Task_List.ItemsSource = Tasks;
-                DataContext=this;
+                DataContext = this;
+                Taske_List.ItemsSource = Tasks;
+                DataContext =this;
                 Category_List.ItemsSource = UniqueCategoriesList;
                 DataContext = this;
             }
@@ -192,19 +181,29 @@ namespace LB
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
+            TaskName.Content = "";
+            TaskDescriotion.Text = "";
+            TaskDate.Text = "";
+            TaskDateTime.Text = "";
             Task_List.Visibility = Visibility.Hidden;
             Taske_List.Visibility = Visibility.Visible;
             Buttone_Delete.Visibility = Visibility.Hidden;
             Buttone_Gotovo.Visibility = Visibility.Hidden;
-
         }
         private void Taske_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ClassTask classTask = (ClassTask)Taske_List.SelectedItem;
-            TaskName.Content = classTask.Name;
-            TaskDescriotion.Text = classTask.Description;
-            TaskDate.Text = classTask.Date.ToString("HH:mm");
-            TaskDateTime.Text = classTask.DateAndTime.ToString("dd MMMMMMMMMM yyyy");
+            if (classTask == null)
+            {
+
+            }
+            if (classTask != null)
+            {
+                TaskName.Content = classTask.Name;
+                TaskDescriotion.Text = classTask.Description;
+                TaskDate.Text = classTask.Date.ToString("HH:mm");
+                TaskDateTime.Text = classTask.DateAndTime.ToString("dd MMMMMMMMMM yyyy");
+            }
             Buttone_Delete.Visibility = Visibility.Hidden;
             Buttone_Gotovo.Visibility = Visibility.Hidden;
         }
@@ -212,8 +211,8 @@ namespace LB
         {
             Task_List.Visibility = Visibility.Visible;
             Taske_List.Visibility = Visibility.Hidden;
-            Buttone_Delete.Visibility = Visibility.Visible;
-            Buttone_Gotovo.Visibility = Visibility.Visible;
+            Buttone_Delete.Visibility = Visibility.Hidden;
+            Buttone_Gotovo.Visibility = Visibility.Hidden;
             TaskName.Content = "";
             TaskDescriotion.Text = "";
             TaskDate.Text = "";
@@ -223,15 +222,42 @@ namespace LB
         private void Category_List_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             string selectedCity = Category_List.SelectedItem as string;
-            // Фильтруем людей по городу
-            var filteredPeople = TaskRepository.AllTasks.Where(p => p.Category == selectedCity);
-            Task_List.ItemsSource = filteredPeople.ToList();
-            Taske_List.ItemsSource = filteredPeople.ToList();
-            if (selectedCity == "Все")
+            var filteredPeople = Tasks.Where(p => p.Category == selectedCity).ToList();
+            if (filteredPeople.Count == null && selectedCity != "Все")
             {
-                // Показываем всех людей
-                Task_List.ItemsSource = TaskRepository.AllTasks;
+                MessageBox.Show("В данной категории нет задач.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else
+            {
+                Task_List.ItemsSource = filteredPeople.ToList();
+                Taske_List.ItemsSource = filteredPeople.ToList();
+                TaskName.Content = "";
+                TaskDescriotion.Text = "";
+                TaskDate.Text = "";
+                TaskDateTime.Text = "";
+                Buttone_Delete.Visibility = Visibility.Hidden;
+                Buttone_Gotovo.Visibility = Visibility.Hidden;
+                if (selectedCity == "Все")
+                {
+                    TaskName.Content = "";
+                    TaskDescriotion.Text = "";
+                    TaskDate.Text = "";
+                    TaskDateTime.Text = "";
+                    // Показываем всех людей
+                    Task_List.ItemsSource = Tasks;
+                }
+                if (filteredPeople == null)
+                {
+                    var filteredPeoples = Tasks.Where(p => p.Category == selectedCity);
+                    Task_List.ItemsSource = filteredPeoples.ToList();
+                    Taske_List.ItemsSource = filteredPeoples.ToList();
+                    TaskName.Content = "";
+                    TaskDescriotion.Text = "";
+                    TaskDate.Text = "";
+                    TaskDateTime.Text = "";
+                }
+            }
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -270,7 +296,6 @@ namespace LB
         {
 
         }
-
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 

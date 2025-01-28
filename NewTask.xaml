@@ -34,7 +34,7 @@
 
                 </Grid>
                 <Grid Grid.Row="2">
-                    <Button Content="Отмена" Margin="20" Click="Button_Click" ></Button>
+                    <Button Content="Отмена" Margin="20,50,20,20" Click="Button_Click" ></Button>
                 </Grid>
             </Grid>
             <Grid Grid.Column="0" Grid.RowSpan="2">

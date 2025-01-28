@@ -79,7 +79,7 @@
             <Label Grid.Row="2" VerticalAlignment="Bottom" Content="Создайте свою первую задачу!" FontSize="20"></Label>
             <Button Style="{DynamicResource ButtonStyle1}"  Grid.Row="4" Content="Создать первую задачу" Background="#FFC37979" Height="40" Width="200" Click="Button_Click"></Button>
         </Grid>
-        <Image Source="C:\Users\manan\OneDrive\Рабочий стол\Разработка кода\Lb1\Resources\5217769998146199571.png" VerticalAlignment="Top"  />
+        <Image Source="/Resorses/fbd77efb-cf91-44bf-a1f4-9b1ac7516c80.jpg" />
 
     </Grid>
 </Window>
